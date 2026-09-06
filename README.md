@@ -1,3 +1,6 @@
+## you do NOT have to real all that, just give it to any AI and ask him about what you specifically want to know in the project 
+
+
 # Gaming Center Network -- Cisco Packet Tracer
 
 A complete enterprise-style gaming center network designed and
@@ -65,10 +68,10 @@ next one.
                          Po1 /           \ Po2
                            /               \
                     ACCESS-SW1          ACCESS-SW2
-                    /   |   \             |
-                  PCs  AP1  ...           PCs
-                       |
-                  Guest Wi-Fi
+                    /   |   \             |    \
+                  PCs  AP1  ...           PCs   AP2
+                       |                         |
+                  Guest Wi-Fi               Guest Wi-Fi
 ```
 
 ### Main devices
