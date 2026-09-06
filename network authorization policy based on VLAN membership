@@ -1,0 +1,46 @@
+Yes. Based on the **actual ACLs and security policies we implemented**, the authorization view can be summarized like this:
+
+### 🔐 User Authorization by VLAN
+
+| VLAN / User                  | Can Do                                                                            | Cannot Do                                                                                                  |
+| ---------------------------- | --------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| 🎮 **Gaming — VLAN 10**      | Access gaming resources, other permitted networks, Internet/external services     | ❌ Cannot initiate traffic to **Management VLAN 99**                                                        |
+| 👨‍💼 **Staff — VLAN 20**    | Access normal network resources, services, Internet/external services             | ❌ Cannot initiate traffic to **Management VLAN 99**                                                        |
+| 📶 **Guest Wi-Fi — VLAN 30** | Get DHCP address, access Internet/public network, use permitted external services | ❌ Cannot access **any internal 192.168.0.0/16 network**, including Gaming, Staff, Services, and Management |
+| 🖥️ **Services — VLAN 40**   | Host/provide network services to permitted networks                               | ❌ No user access policy was specifically restricted by ACL yet                                             |
+| 🔧 **Management — VLAN 99**  | Manage switches and access other network segments                                 | ✅ Trusted VLAN; no restriction preventing it from reaching other VLANs                                     |
+
+### In simple terms
+
+```text
+                 GAMING     STAFF      GUEST      SERVICES
+                   ↓          ↓           ↓           ↓
+Management 99      ❌         ❌          ❌          —
+                   ↑
+             MANAGEMENT
+              VLAN 99
+          Trusted / Admin
+```
+
+And for Guest:
+
+```text
+Guest VLAN 30
+      │
+      ├──→ Internet / Public Network    ✅
+      │
+      └──→ Internal 192.168.0.0/16      ❌
+              ├── Gaming
+              ├── Staff
+              ├── Services
+              └── Management
+```
+
+**Important:** this is a **network authorization policy based on VLAN membership**, not user authentication. The VLAN determines the network segment the device belongs to, while the ACLs enforce what traffic that segment is allowed to initiate.
+
+This would also be a good small section to add to your README as **“Network Access & Authorization Matrix.”**
+
+Clarify the network access policy
+
+* Add an admin and guest policy note
+* Turn this into a README section
